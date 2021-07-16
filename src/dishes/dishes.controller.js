@@ -63,7 +63,7 @@ function bodyHasImageUrl (req, res, next) {
 }
 
 //http post method for /dishes
-function create(req,res,next) {
+function create(req,res) {
     const { data = {} } = req.body;
     const newDish = {
         id: nextId(),

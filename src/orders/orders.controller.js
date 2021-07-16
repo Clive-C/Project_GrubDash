@@ -78,7 +78,7 @@ function dishHasQuantity(req,res,next){
 }
 
 //html post method for /orders
-function create(req,res,next){
+function create(req,res){
     const { data = {} } = req.body;
     const newOrder = {
         id: nextId(),
@@ -102,6 +102,7 @@ function orderExists(req,res,next) {
         status: 404,
         message: `Order does not exists: ${orderId}.`
     })
+    console.log(foundOrder)
 }
 
 //http get method for /orders/:orderId
@@ -145,7 +146,7 @@ function bodyHasStatus (req,res,next) {
 }
 
 //html put method for /orders/orderId
-function update(req,res,next){
+function update(req,res){
     const order = res.locals.order;
     const { data = {} } = req.body;
 
@@ -164,9 +165,8 @@ function orderIsPending(req,res,next){
     })
 }
 //html delete method for /orders/orderId
-function destroy(req,res,next){
-    const {orderId} = req.params;
-    const index = orders.findIndex((order) => Number(order.id) === Number(orderId));
+function destroy(req,res){
+    const index = orders.indexOf(res.locals.order) //updated to use res.locals
     const deletedOrders = orders.splice(index,1);
 
     res.sendStatus(204);
